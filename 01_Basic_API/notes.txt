@@ -1,0 +1,183 @@
+
+import fastapi
+import uvicorn
+
+api = fastapi.FastAPI()
+
+@api.get('/api/caluclated')
+def calculator():
+    return 2 + 2
+
+
+uvicorn.run( api )
+
+------------
+http://127.0.0.1:8000/ 
+Not found; so, change the end points to;
+http://127.0.0.1:8000/api/caluclated
+
+import fastapi
+import uvicorn
+
+api = fastapi.FastAPI()
+
+@api.get('/api/caluclated')
+def calculator():
+    value = 2 + 2
+    
+    return { 'value':  value }
+
+
+uvicorn.run( api )
+------------------------
+
+import fastapi
+import uvicorn
+
+api = fastapi.FastAPI()
+
+@api.get('/api/caluclated')
+def calculator():
+    value = 2 + 2
+    
+    return { 'value':  value }
+
+
+uvicorn.run( api , port=8000, host='127.0.0.1')
+
+--------------------------
+A minimal API endpoint.
+
+Know your HTTP verbs.
+
+https://httpstatuses.com
+
+
+variables passing: everything is string from the web
+-----------------
+
+import fastapi
+import uvicorn
+
+api = fastapi.FastAPI()
+
+@api.get('/api/caluclated')
+def calculator(x,y,z):
+    
+    value = ( int(x) + int(y) ) * int(z) 
+    
+    return { 'value':  value }
+
+
+uvicorn.run( api , port=8000, host='127.0.0.1')
+
+------------------
+
+One more way:
+
+import fastapi
+import uvicorn
+
+api = fastapi.FastAPI()
+
+@api.get('/api/caluclated')
+def calculator(x: int,y: int,z: int):
+    
+    value = ( x + y ) * z
+    
+    return { 'value':  value }
+
+
+uvicorn.run( api , port=8000, host='127.0.0.1')
+
+--------------
+Default value is z=10;
+
+import fastapi
+import uvicorn
+
+api = fastapi.FastAPI()
+
+@api.get('/api/caluclated')
+def calculator(x: int,y: int,z: int = 10 ):
+    
+    value = ( x + y ) * z
+    
+    return { 'value':  value }
+
+uvicorn.run( api , port=8000, host='127.0.0.1')
+
+===========================
+
+import fastapi
+import uvicorn
+from typing import Optional
+
+api = fastapi.FastAPI()
+
+@api.get('/api/caluclated')
+def calculator(x: int,y: int, z: Optional[int] = None ):
+    
+    if z == 0:
+        return { 'error': 'Zero z'}
+    
+    value = ( x + y ) 
+    
+    if z is not None:
+        value = value / z
+    
+    return { 'value':  value }
+
+
+uvicorn.run( api , port=8000, host='127.0.0.1')
+
+================================
+
+Adding Error's:
+
+import fastapi
+import uvicorn
+from typing import Optional
+
+api = fastapi.FastAPI()
+
+@api.get('/api/caluclated')
+def calculator(x: int,y: int, z: Optional[int] = None ):
+    
+    if z == 0:
+        return fastapi.Response(content='ERROR: Z cannot be zero', status_code=400 )
+    
+    value = x + y 
+    
+    if z is not None:
+        value = value / z
+    
+    return { 'value':  value }
+
+
+uvicorn.run( api , port=8000, host='127.0.0.1')
+
+============================
+
+Chapter-4: Modern Python and API;
+Type hints;
+async / await
+ASGI servers
+Pydantic Classes
+Rich editor support
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
